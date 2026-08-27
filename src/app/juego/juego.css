@@ -1,0 +1,61 @@
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  max-width: 420px;
+  perspective: 1000px;
+}
+
+.game-card {
+  aspect-ratio: 1;
+  cursor: pointer;
+  border: none; /* el borde vive en las caras, no en el contenedor 3D */
+}
+
+.game-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.4s;
+  transform-style: preserve-3d;
+}
+
+.game-card.flipped .game-card-inner {
+  transform: rotateY(180deg);
+}
+
+.game-card.matched .game-card-inner {
+  opacity: 0.4;
+}
+
+.game-card-front,
+.game-card-back {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 1px solid var(--nordic-border, #ddd9d1);
+}
+
+/* Baldosa boca abajo: plana, tono carbón, sin textura de madera */
+.game-card-front {
+  background-color: var(--nordic-dark, #14171a);
+  color: #f5f3ee;
+  font-size: 1.3rem;
+}
+
+.game-card-back {
+  background-color: var(--nordic-surface, #fff);
+  border-color: var(--nordic-fjord, #2f5468);
+  transform: rotateY(180deg);
+}
+
+.game-card-back img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

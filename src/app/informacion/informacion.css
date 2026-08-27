@@ -1,0 +1,87 @@
+/* --- Tarjetas destacadas (plato / bebida estrella) --- */
+.featured-card {
+  border: 1px solid var(--nordic-border);
+  border-radius: 4px;
+  transition: border-color 0.25s ease;
+}
+
+.featured-card:hover {
+  border-color: var(--nordic-border-strong);
+}
+
+.featured-img-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.featured-img {
+  height: 260px;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.featured-card:hover .featured-img {
+  transform: scale(1.04);
+}
+
+.featured-badge-wrapper {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+}
+
+.category-meta {
+  color: var(--nordic-ink-soft);
+}
+
+.price-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--nordic-ink);
+}
+
+.dish-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: var(--nordic-ink);
+}
+
+.dish-description {
+  font-weight: 300;
+  color: var(--nordic-ink-soft);
+  line-height: 1.6;
+}
+
+.ingredients-hint {
+  font-size: 0.85rem;
+}
+
+/* --- Franja "Pilares" / filosofía --- */
+.philosophy-strip {
+  border-top: 1px solid var(--nordic-border);
+}
+
+.philosophy-card {
+  height: 100%;
+  border-left: 2px solid var(--nordic-fjord);
+  background-color: var(--nordic-bg-alt);
+  border-radius: 0 4px 4px 0;
+}
+
+.philosophy-num {
+  color: var(--nordic-brick);
+}
+
+.philosophy-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--nordic-ink);
+}
+
+.philosophy-text {
+  font-weight: 300;
+  font-size: 0.92rem;
+}

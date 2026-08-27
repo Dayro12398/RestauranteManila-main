@@ -1,0 +1,52 @@
+.pedido-thumb {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 3px;
+  border: 1px solid var(--nordic-border);
+}
+
+/* --- Ticket de compra: tarjeta plana con borde de "recibo" --- */
+.ticket-card {
+  background-color: var(--nordic-surface);
+  border: 1px solid var(--nordic-border);
+  border-radius: 4px;
+  position: relative;
+}
+
+.ticket-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background-color: var(--nordic-fjord);
+}
+
+.ticket-table thead th {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--nordic-ink-soft);
+  border-bottom: 1px solid var(--nordic-border);
+}
+
+.ticket-table td {
+  border-bottom: 1px solid var(--nordic-border);
+  font-size: 0.9rem;
+}
+
+.ticket-total {
+  border-top: 1px solid var(--nordic-border);
+}
+
+.btn-qty {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  line-height: 1;
+  border-radius: 3px;
+}

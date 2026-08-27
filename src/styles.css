@@ -1,0 +1,355 @@
+/* =======================================================
+   MANILA — Sistema de diseño
+   Nórdico minimalista + estructura fuerte de Europa del Este
+   ======================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Pirata+One&display=swap');
+
+:root {
+  /* --- Paleta base --- */
+  --nordic-bg: #f6f5f2;          /* blanco roto */
+  --nordic-bg-alt: #eeece6;      /* gris muy claro, paneles */
+  --nordic-surface: #ffffff;     /* tarjetas */
+  --nordic-ink: #22262a;         /* carbón, texto principal */
+  --nordic-ink-soft: #5c6470;    /* texto secundario */
+  --nordic-border: #ddd9d1;      /* bordes sutiles */
+  --nordic-border-strong: #c7c2b8;
+
+  /* --- Acentos --- */
+  --nordic-fjord: #2f5468;       /* azul fiordo desaturado */
+  --nordic-fjord-dark: #223f4f;
+  --nordic-brick: #a85142;       /* rojo ladrillo suave */
+  --nordic-brick-dark: #863f33;
+  --nordic-dark: #14171a;        /* casi negro, header/footer */
+
+  /* --- Overrides Bootstrap --- */
+  --bs-body-bg: var(--nordic-bg);
+  --bs-body-color: var(--nordic-ink);
+  --bs-primary: var(--nordic-fjord);
+  --bs-primary-rgb: 47, 84, 104;
+  --bs-danger: var(--nordic-brick);
+  --bs-danger-rgb: 168, 81, 66;
+  --bs-dark: var(--nordic-dark);
+  --bs-dark-rgb: 20, 23, 26;
+  --bs-secondary: var(--nordic-ink-soft);
+  --bs-secondary-color: var(--nordic-ink-soft);
+  --bs-link-color: var(--nordic-fjord);
+  --bs-link-hover-color: var(--nordic-fjord-dark);
+  --bs-warning: var(--nordic-brick);
+  --bs-warning-rgb: 168, 81, 66;
+  --bs-success: #4c6b53;
+  --bs-border-color: var(--nordic-border);
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+app-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+app-inicio, app-comidas, app-bebidas, app-juego, app-pedido {
+  flex: 1;
+}
+
+app-footer {
+  flex-shrink: 0;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  color: var(--nordic-ink);
+}
+
+/* --- Tipografía --- */
+h1, h2, h3, h4, .navbar-brand {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  color: var(--nordic-ink);
+  letter-spacing: -0.01em;
+}
+
+h1, h2 {
+  animation: aparecer 0.8s ease-out;
+}
+
+p, .text-muted, .fw-light {
+  font-weight: 300;
+  color: var(--nordic-ink-soft) !important;
+}
+
+@keyframes aparecer {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Etiqueta monoespaciada, estilo "industrial" para categorías/metadatos */
+.mono-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--nordic-ink-soft);
+}
+
+.sub-header-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--nordic-brick);
+}
+
+.section-heading {
+  font-weight: 800;
+  color: var(--nordic-ink);
+}
+
+.heading-divider {
+  width: 48px;
+  height: 3px;
+  background-color: var(--nordic-fjord);
+  border-radius: 0;
+}
+
+.max-w-600 { max-width: 600px; }
+
+/* --- Wordmark MANILA / RESTAURANTE: tipografía tipo rúnica-vikinga ---
+   Se usa solo para el logotipo de marca (navbar y footer), como acento
+   deliberado sobre la base tipográfica nórdica limpia del resto del sitio. */
+.brand-viking {
+  font-family: 'Pirata One', serif;
+  line-height: 1;
+}
+
+.brand-viking-word {
+  font-family: 'Pirata One', serif;
+  font-size: 1.7rem;
+  letter-spacing: 0.05em;
+  line-height: 1;
+}
+
+.brand-viking-sub {
+  font-family: 'Pirata One', serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+/* --- Tarjetas: planas, bordes sutiles, sin sombras pesadas --- */
+.card {
+  border: 1px solid var(--nordic-border);
+  border-radius: 4px;
+  background-color: var(--nordic-surface);
+  box-shadow: none;
+  overflow: hidden;
+  transition: border-color 0.25s ease, transform 0.25s ease;
+}
+
+.card:hover {
+  border-color: var(--nordic-border-strong);
+}
+
+.card-img-top {
+  transition: transform 0.5s ease;
+}
+
+.card:hover .card-img-top {
+  transform: scale(1.04);
+}
+
+.carousel-img {
+  transition: transform 6s ease;
+}
+
+/* --- Botones --- */
+.btn {
+  border-radius: 3px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.btn-fjord {
+  background-color: var(--nordic-fjord);
+  border-color: var(--nordic-fjord);
+  color: #fff;
+}
+
+.btn-fjord:hover {
+  background-color: var(--nordic-fjord-dark);
+  border-color: var(--nordic-fjord-dark);
+  color: #fff;
+}
+
+.btn-brick {
+  background-color: var(--nordic-brick);
+  border-color: var(--nordic-brick);
+  color: #fff;
+}
+
+.btn-brick:hover {
+  background-color: var(--nordic-brick-dark);
+  border-color: var(--nordic-brick-dark);
+  color: #fff;
+}
+
+.btn-outline-dark {
+  --bs-btn-color: var(--nordic-ink);
+  --bs-btn-border-color: var(--nordic-border-strong);
+  --bs-btn-hover-bg: var(--nordic-ink);
+  --bs-btn-hover-border-color: var(--nordic-ink);
+}
+
+.btn-outline-light-nordic {
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  color: #fff;
+}
+
+.btn-outline-light-nordic:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+  border-color: #fff;
+  color: #fff;
+}
+
+/* --- Badges de acento --- */
+.badge-fjord {
+  background-color: var(--nordic-fjord);
+  color: #fff;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  padding: 0.4em 0.7em;
+  border-radius: 2px;
+}
+
+.badge-brick {
+  background-color: var(--nordic-brick);
+  color: #fff;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  padding: 0.4em 0.7em;
+  border-radius: 2px;
+}
+
+/* --- Texto de acento reutilizable --- */
+.text-fjord { color: var(--nordic-fjord) !important; }
+.text-brick { color: var(--nordic-brick) !important; }
+
+/* --- Panel de filtros (Comidas / Bebidas) --- */
+.filter-panel {
+  background-color: var(--nordic-surface);
+  border: 1px solid var(--nordic-border);
+  border-radius: 4px;
+}
+
+.filter-label {
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--nordic-ink-soft);
+}
+
+.filter-input,
+.filter-select {
+  border: 1px solid var(--nordic-border-strong);
+  border-radius: 3px;
+  background-color: var(--nordic-bg);
+  color: var(--nordic-ink);
+}
+
+.filter-input:focus,
+.filter-select:focus {
+  border-color: var(--nordic-fjord);
+  box-shadow: 0 0 0 0.2rem rgba(47, 84, 104, 0.15);
+  background-color: var(--nordic-surface);
+}
+
+/* Botones de categoría / filtro tipo "chip" plano */
+.btn-category {
+  background-color: transparent;
+  border: 1px solid var(--nordic-border-strong);
+  color: var(--nordic-ink-soft);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  border-radius: 3px;
+  padding: 0.4rem 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.btn-category:hover {
+  border-color: var(--nordic-fjord);
+  color: var(--nordic-fjord);
+}
+
+.btn-category.active {
+  background-color: var(--nordic-ink);
+  border-color: var(--nordic-ink);
+  color: #fff;
+}
+
+/* Botón "Agregado" (estado de confirmación) */
+.btn-added {
+  background-color: var(--nordic-ink);
+  border-color: var(--nordic-ink);
+  color: #fff;
+}
+
+/* Alertas planas, sin colores saturados de Bootstrap */
+.alert-nordic {
+  background-color: var(--nordic-bg-alt);
+  border: 1px solid var(--nordic-border);
+  color: var(--nordic-ink-soft);
+  border-radius: 4px;
+  padding: 1rem 1.25rem;
+}
+
+.alert-nordic-brick {
+  background-color: #f7ece9;
+  border: 1px solid rgba(168, 81, 66, 0.35);
+  color: var(--nordic-brick-dark);
+  border-radius: 4px;
+  padding: 1rem 1.25rem;
+}
+
+/* Tarjetas de ítem (comida / bebida) */
+.item-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--nordic-ink);
+}
+
+.item-desc {
+  font-weight: 300;
+  font-size: 0.85rem;
+  color: var(--nordic-ink-soft) !important;
+}
+
+/* --- Juego de memoria (baldosas) --- */
+.game-card {
+  transition: transform 0.2s ease, border-color 0.2s ease;
+  cursor: pointer;
+  border: 1px solid var(--nordic-border);
+  border-radius: 4px;
+}
+
+.game-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--nordic-fjord);
+}

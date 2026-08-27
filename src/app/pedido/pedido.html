@@ -1,0 +1,132 @@
+<div class="container py-5">
+
+  <div class="text-center mb-5">
+    <span class="sub-header-label">Tu selección</span>
+    <h1 class="section-heading mt-2">Realizar pedido</h1>
+    <div class="heading-divider mx-auto my-3"></div>
+    <p class="text-muted max-w-600 mx-auto">Revisa tu pedido y cuéntanos a dónde lo enviamos.</p>
+  </div>
+
+  @if (pedidoConfirmado()) {
+
+    <div class="ticket-card p-5 text-center mx-auto" style="max-width: 560px;">
+      <i class="bi bi-check-circle-fill text-fjord display-3 mb-3"></i>
+      <h3 class="item-title" style="font-size: 1.4rem;">¡Pedido realizado!</h3>
+      <p class="text-muted">
+        Tu pedido <strong class="mono-tag" style="font-size: 0.9rem;">{{ numeroPedido() }}</strong> fue generado y el PDF se descargó automáticamente.
+      </p>
+      <div class="d-flex gap-2 justify-content-center mt-3">
+        <button class="btn btn-fjord" (click)="nuevoPedido()">Hacer otro pedido</button>
+        <a routerLink="/" class="btn btn-outline-dark">Volver al inicio</a>
+      </div>
+    </div>
+
+  } @else {
+
+    <div class="row g-4">
+
+      <div class="col-lg-7">
+        <div class="ticket-card p-4">
+          <span class="mono-tag">Detalle</span>
+          <h5 class="item-title mb-3" style="font-size: 1.2rem;">Tu pedido</h5>
+
+          @if (carritoService.items().length === 0) {
+            <div class="alert alert-nordic">
+              Todavía no has agregado nada. Ve a
+              <a routerLink="/comidas" class="text-fjord">comidas</a> o <a routerLink="/bebidas" class="text-fjord">bebidas</a> para elegir.
+            </div>
+          } @else {
+
+            <div class="table-responsive">
+              <table class="table align-middle ticket-table">
+                <thead>
+                  <tr>
+                    <th>Ítem</th>
+                    <th class="text-center">Cantidad</th>
+                    <th class="text-end">Precio</th>
+                    <th class="text-end">Subtotal</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (item of carritoService.items(); track item.id + item.tipo) {
+                    <tr>
+                      <td>
+                        <div class="d-flex align-items-center gap-2">
+                          <img [src]="item.imagen" [alt]="item.nombre" class="pedido-thumb">
+                          <div>
+                            <div class="fw-semibold" style="font-size: 0.9rem;">{{ item.nombre }}</div>
+                            <small class="mono-tag">{{ item.tipo }}</small>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="text-center">
+                        <div class="d-flex align-items-center justify-content-center gap-2">
+                          <button class="btn btn-sm btn-outline-dark btn-qty" (click)="decrementar(item)">-</button>
+                          <span>{{ item.cantidad }}</span>
+                          <button class="btn btn-sm btn-outline-dark btn-qty" (click)="incrementar(item)">+</button>
+                        </div>
+                      </td>
+                      <td class="text-end">${{ item.precioUnitario | number:'1.0-0' }}</td>
+                      <td class="text-end fw-semibold">${{ item.cantidad * item.precioUnitario | number:'1.0-0' }}</td>
+                      <td class="text-end">
+                        <button class="btn btn-sm btn-link text-brick" (click)="quitar(item)">
+                          <i class="bi bi-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+
+            <div class="d-flex justify-content-end ticket-total pt-3">
+              <h5 class="mb-0">Total: <span class="price-tag" style="font-size: 1.3rem;">${{ carritoService.totalPagar() | number:'1.0-0' }}</span></h5>
+            </div>
+
+          }
+
+        </div>
+      </div>
+
+      <div class="col-lg-5">
+        <div class="ticket-card p-4">
+          <span class="mono-tag">Contacto</span>
+          <h5 class="item-title mb-3" style="font-size: 1.2rem;">Datos del cliente</h5>
+
+          @if (errorFormulario()) {
+            <div class="alert alert-nordic-brick">{{ errorFormulario() }}</div>
+          }
+
+          <form (ngSubmit)="realizarPedido()">
+
+            <div class="mb-3">
+              <label class="filter-label mb-2">Nombre completo</label>
+              <input type="text" class="form-control filter-input" [(ngModel)]="cliente.nombre" name="nombre" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="filter-label mb-2">Celular</label>
+              <input type="tel" class="form-control filter-input" [(ngModel)]="cliente.celular" name="celular" required>
+            </div>
+
+            <div class="mb-4">
+              <label class="filter-label mb-2">Dirección</label>
+              <input type="text" class="form-control filter-input" [(ngModel)]="cliente.direccion" name="direccion" required>
+            </div>
+
+            <button type="submit" class="btn btn-brick w-100">
+              <i class="bi bi-file-earmark-pdf me-2"></i>
+              Realizar pedido y descargar PDF
+            </button>
+
+          </form>
+
+        </div>
+      </div>
+
+    </div>
+
+  }
+
+</div>

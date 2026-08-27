@@ -1,0 +1,126 @@
+.site-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow: none;
+  z-index: 1030;
+  position: relative;
+}
+
+.bg-nordic-dark {
+  background-color: var(--nordic-dark, #14171a);
+}
+
+.brand-mark {
+  height: 42px;
+  width: auto;
+  object-fit: contain;
+  transition: opacity 0.2s ease;
+}
+
+.navbar-brand:hover .brand-mark {
+  opacity: 0.85;
+}
+
+.brand-lockup {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.brand-lockup .brand-viking-word {
+  color: #f5f3ee;
+  font-size: 1.55rem;
+}
+
+.brand-lockup .brand-viking-sub {
+  color: var(--nordic-brick, #a85142);
+  font-size: 0.62rem;
+  margin-top: 2px;
+}
+
+.navbar-nav .nav-link {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #c5ced7;
+  padding: 0.5rem 0.85rem;
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #ffffff;
+}
+
+.navbar-nav .nav-link.active {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.navbar-nav .nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0.85rem;
+  right: 0.85rem;
+  height: 2px;
+  background-color: var(--nordic-brick, #a85142);
+  border-radius: 1px;
+}
+
+/* Botón Pedido con contador de carrito */
+.nav-cart-btn {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+  padding: 0.42rem 0.9rem !important;
+  color: #f5f7f9 !important;
+  transition: all 0.2s ease;
+}
+
+.nav-cart-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.25);
+  color: #ffffff !important;
+}
+
+.nav-cart-btn.active {
+  background-color: var(--nordic-fjord, #2f5468);
+  border-color: var(--nordic-fjord, #2f5468);
+}
+
+.nav-cart-btn.active::after {
+  display: none;
+}
+
+.cart-counter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--nordic-brick, #a85142);
+  color: #ffffff;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  min-width: 1.25rem;
+  height: 1.25rem;
+  padding: 0 0.35rem;
+  border-radius: 2px;
+}
+
+@media (max-width: 991.98px) {
+  .navbar-nav .nav-link.active::after {
+    display: none;
+  }
+  
+  .navbar-nav .nav-link {
+    padding: 0.6rem 0;
+  }
+
+  .nav-cart-btn {
+    margin-top: 0.5rem;
+    display: inline-flex;
+  }
+}
+

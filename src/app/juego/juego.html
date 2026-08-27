@@ -1,0 +1,56 @@
+<div class="container text-center py-5">
+
+  <span class="sub-header-label">Pon a prueba tu memoria</span>
+  <h1 class="section-heading mt-2 mb-1">Memo MANILA</h1>
+  <div class="heading-divider mx-auto my-3"></div>
+  <p class="text-muted mb-1">Encuentra las parejas de platos y bebidas</p>
+
+  @if (!cargando() && !error()) {
+    <p class="mono-tag mb-4">
+      Intentos: {{ intentos() }} · Aciertos: {{ aciertos() }} / {{ cartas().length / 2 }}
+    </p>
+  }
+
+  @if (cargando()) {
+    <div class="text-center text-muted py-5">
+      <div class="spinner-border text-secondary mb-3" style="width: 2.2rem; height: 2.2rem; border-width: 2px;" role="status"></div>
+      <p class="mono-tag">Preparando el tablero...</p>
+    </div>
+  } @else if (error()) {
+    <div class="alert alert-nordic-brick mx-auto" style="max-width: 480px;">
+      {{ error() }}
+    </div>
+    <button class="btn btn-fjord" (click)="reiniciar()">Reintentar</button>
+  } @else {
+
+    @if (juegoGanado()) {
+      <div class="alert alert-nordic mx-auto mb-4" style="max-width: 480px; border-color: var(--nordic-fjord);">
+        <i class="bi bi-trophy-fill text-fjord me-2"></i>
+        ¡Completaste el memorama en {{ intentos() }} intentos!
+      </div>
+    }
+
+    <div class="game-grid mx-auto mb-4">
+      @for (carta of cartas(); track $index) {
+        <div class="game-card" [class.flipped]="carta.volteada || carta.encontrada"
+          [class.matched]="carta.encontrada" (click)="voltear($index)">
+          <div class="game-card-inner">
+            <div class="game-card-front">
+              <i class="bi bi-question-lg"></i>
+            </div>
+            <div class="game-card-back">
+              <img [src]="carta.imagen" alt="Carta del juego">
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+
+    <button class="btn btn-outline-dark" (click)="reiniciar()">
+      <i class="bi bi-arrow-clockwise me-2"></i>
+      Reiniciar juego
+    </button>
+
+  }
+
+</div>

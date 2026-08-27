@@ -1,0 +1,60 @@
+<nav class="navbar navbar-expand-lg navbar-dark site-header bg-nordic-dark py-3">
+  <div class="container">
+
+    <a class="navbar-brand d-flex align-items-center gap-2" routerLink="/">
+      <img src="img/manila_icon_filipino_v2.png" alt="" class="brand-mark">
+      <span class="brand-lockup">
+        <span class="brand-viking-word">MANILA</span>
+        <span class="brand-viking-sub">Restaurante</span>
+      </span>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu"
+      aria-controls="navbarMenu" aria-expanded="false" aria-label="Abrir navegación">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarMenu">
+      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            Inicio
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/comidas" routerLinkActive="active">
+            Comidas
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/bebidas" routerLinkActive="active">
+            Bebidas
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/juego" routerLinkActive="active">
+            Memo MANILA
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link nav-cart-btn" routerLink="/pedido" routerLinkActive="active">
+            <i class="bi bi-cart3 me-1"></i>
+            Pedido
+            @if (carritoService.totalItems() > 0) {
+              <span class="cart-counter ms-1">
+                {{ carritoService.totalItems() }}
+              </span>
+            }
+          </a>
+        </li>
+
+      </ul>
+    </div>
+
+  </div>
+</nav>

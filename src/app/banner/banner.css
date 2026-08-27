@@ -1,0 +1,68 @@
+.carousel-img {
+  height: 450px;
+  object-fit: cover;
+}
+
+@media (max-width: 768px) {
+  .carousel-img {
+    height: 280px;
+  }
+}
+
+@media (max-width: 480px) {
+  .carousel-img {
+    height: 200px;
+  }
+}
+
+.carousel-item {
+  height: 550px;
+}
+
+.carousel-item img {
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.55) saturate(0.85);
+}
+
+.carousel-caption {
+  top: 0;
+  bottom: 0;
+  left: 8%;
+  right: 8%;
+  text-align: left;
+  align-items: flex-start;
+}
+
+.banner-eyebrow {
+  color: #e7e4dc;
+  animation: aparecer 0.8s ease-out;
+}
+
+.banner-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  font-size: clamp(2.1rem, 5vw, 3.4rem);
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  animation: aparecer 0.8s ease-out 0.15s backwards;
+}
+
+.banner-text {
+  color: #dedad2;
+  font-weight: 300;
+  max-width: 480px;
+  animation: aparecer 0.8s ease-out 0.3s backwards;
+}
+
+.carousel-caption > div {
+  animation: aparecer 0.8s ease-out 0.45s backwards;
+}
+
+.carousel-indicators [data-bs-target] {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.carousel-indicators .active {
+  background-color: var(--nordic-brick, #a85142);
+}

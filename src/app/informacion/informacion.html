@@ -1,0 +1,147 @@
+<section class="py-5 my-3 my-lg-4">
+  <div class="container">
+    
+    <!-- Encabezado de Sección -->
+    <div class="text-center mb-5">
+      <span class="sub-header-label">SELECCIÓN DE LA CASA</span>
+      <h2 class="section-heading display-6 mb-3">Recomendaciones del Chef</h2>
+      <div class="heading-divider mx-auto mb-3"></div>
+      <p class="text-muted max-w-600 mx-auto">
+        Plato insignia y cóctel de autor seleccionados especialmente para brindarte una muestra auténtica de nuestra propuesta gastronómica.
+      </p>
+    </div>
+
+    @if (cargando()) {
+      <div class="text-center py-5">
+        <div class="spinner-border text-secondary mb-3" style="width: 2.5rem; height: 2.5rem; border-width: 2px;" role="status"></div>
+        <p class="text-muted mono-tag">Sincronizando menú del día...</p>
+      </div>
+    } @else {
+
+      <div class="row g-4 g-lg-5">
+
+        <!-- Tarjeta Plato Estrella -->
+        <div class="col-lg-6">
+          <div class="card h-100 featured-card">
+            @if (platoEstrella(); as plato) {
+              <div class="featured-img-container">
+                <img [src]="plato.imagen" class="card-img-top featured-img" [alt]="plato.nombre" loading="lazy">
+                <div class="featured-badge-wrapper">
+                  <span class="badge badge-brick">PLATO ESTRELLA</span>
+                </div>
+              </div>
+
+              <div class="card-body p-4 p-xl-5 d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-baseline mb-2">
+                  <span class="category-meta mono-tag">
+                    {{ plato.categoria ? plato.categoria : 'Especialidad Filipina' }}
+                  </span>
+                  <span class="price-tag">${{ plato.precio | number:'1.0-0' }}</span>
+                </div>
+
+                <h3 class="card-title dish-title mb-3">{{ plato.nombre }}</h3>
+
+                <p class="card-text dish-description flex-grow-1">
+                  @if (plato.categoria) {
+                    Preparado al estilo {{ plato.categoria }}, elaborado con especias tradicionales, cocción a fuego lento y terminado con guarnición fresca de la casa.
+                  } @else {
+                    Nuestro plato insignia, elaborado con recetas familiares filipinas, balance perfecto de notas ácidas y sabrosas con una estética limpia.
+                  }
+                </p>
+
+                <div class="pt-4 border-top border-light-subtle d-flex justify-content-between align-items-center">
+                  <span class="ingredients-hint text-muted">
+                    <i class="bi bi-fire me-1 text-danger"></i> Preparación al momento
+                  </span>
+                  <a routerLink="/comidas" class="btn btn-outline-dark btn-sm d-inline-flex align-items-center gap-2">
+                    <span>Ver menú completo</span>
+                    <i class="bi bi-arrow-right"></i>
+                  </a>
+                </div>
+              </div>
+            } @else {
+              <div class="card-body text-center text-muted py-5 d-flex flex-column justify-content-center">
+                <i class="bi bi-exclamation-circle text-muted fs-3 mb-2"></i>
+                <p class="mb-0">No pudimos cargar el plato estrella en este momento.</p>
+              </div>
+            }
+          </div>
+        </div>
+
+        <!-- Tarjeta Bebida Estrella -->
+        <div class="col-lg-6">
+          <div class="card h-100 featured-card">
+            @if (bebidaEstrella(); as bebida) {
+              <div class="featured-img-container">
+                <img [src]="bebida.imagen" class="card-img-top featured-img" [alt]="bebida.nombre" loading="lazy">
+                <div class="featured-badge-wrapper">
+                  <span class="badge badge-fjord">BEBIDA DE AUTOR</span>
+                </div>
+              </div>
+
+              <div class="card-body p-4 p-xl-5 d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-baseline mb-2">
+                  <span class="category-meta mono-tag">
+                    {{ bebida.categoria ? bebida.categoria : 'Coctelería' }}
+                  </span>
+                  <span class="price-tag">${{ bebida.precio | number:'1.0-0' }}</span>
+                </div>
+
+                <h3 class="card-title dish-title mb-3">{{ bebida.nombre }}</h3>
+
+                <p class="card-text dish-description flex-grow-1">
+                  Cóctel refrescante de autor elaborado con destilados finos, botánicos cuidadosamente macerados y notas cítricas equilibradas para acompañar tu experiencia.
+                </p>
+
+                <div class="pt-4 border-top border-light-subtle d-flex justify-content-between align-items-center">
+                  <span class="ingredients-hint text-muted">
+                    <i class="bi bi-droplet me-1 text-fjord"></i> Mixología artesanal
+                  </span>
+                  <a routerLink="/bebidas" class="btn btn-outline-dark btn-sm d-inline-flex align-items-center gap-2">
+                    <span>Ver carta de bebidas</span>
+                    <i class="bi bi-arrow-right"></i>
+                  </a>
+                </div>
+              </div>
+            } @else {
+              <div class="card-body text-center text-muted py-5 d-flex flex-column justify-content-center">
+                <i class="bi bi-exclamation-circle text-muted fs-3 mb-2"></i>
+                <p class="mb-0">No pudimos cargar la bebida estrella en este momento.</p>
+              </div>
+            }
+          </div>
+        </div>
+
+      </div>
+
+    }
+
+    <!-- Manila Philosophy Banner / Pilares Nórdicos -->
+    <div class="philosophy-strip mt-5 pt-4">
+      <div class="row g-4 text-center text-md-start">
+        <div class="col-md-4">
+          <div class="p-4 philosophy-card">
+            <span class="philosophy-num mono-tag">01 / ORIGEN</span>
+            <h5 class="philosophy-title mt-2">Ingredientes Auténticos</h5>
+            <p class="philosophy-text text-muted mb-0">Seleccionamos productos de temporada y condimentos importados directamente para honrar el sabor nativo.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="p-4 philosophy-card">
+            <span class="philosophy-num mono-tag">02 / TÉCNICA</span>
+            <h5 class="philosophy-title mt-2">Precisión y Cuidado</h5>
+            <p class="philosophy-text text-muted mb-0">Cada cocción, emulsión y corte se ejecuta con disciplina nórdica para respetar cada ingrediente.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="p-4 philosophy-card">
+            <span class="philosophy-num mono-tag">03 / AMBIENTE</span>
+            <h5 class="philosophy-title mt-2">Atmósfera Acogedora</h5>
+            <p class="philosophy-text text-muted mb-0">Un espacio pensado para compartir, conversar y degustar sin prisas ni artificios innecesarios.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
