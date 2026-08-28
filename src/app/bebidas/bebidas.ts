@@ -4,10 +4,11 @@ import { DecimalPipe } from '@angular/common';
 import { CocktailService } from '../core/services/cocktail.service';
 import { CarritoService } from '../core/services/carrito.service';
 import { DrinkCard } from '../core/models/cocktail.model';
+import { ProductoModal } from '../shared/producto-modal/producto-modal';
 
 @Component({
   selector: 'app-bebidas',
-  imports: [FormsModule, DecimalPipe],
+  imports: [FormsModule, DecimalPipe, ProductoModal],
   templateUrl: './bebidas.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './bebidas.css',
@@ -25,6 +26,12 @@ export class Bebidas implements OnInit {
   cargando = signal(false);
   error = signal<string | null>(null);
   agregado = signal<string | null>(null);
+  quemando = signal<string | null>(null);
+
+  productoModal = signal<DrinkCard | null>(null);
+  descripcionModal = signal('');
+  cargandoModal = signal(false);
+  saliendoModal = signal(false);
 
   ngOnInit(): void {
     this.cargarPorCategoria('Cocktail');
@@ -121,6 +128,46 @@ export class Bebidas implements OnInit {
     this.cargando.set(false);
   }
 
+  /** Abre la ficha del producto. Si viene de un listado por categoría (sin
+   * ingredientes cargados) trae el detalle completo antes de mostrarlo. */
+  abrirModal(bebida: DrinkCard): void {
+    this.productoModal.set(bebida);
+    this.saliendoModal.set(false);
+    this.descripcionModal.set('');
+
+    if (bebida.ingredientes.length === 0) {
+      this.cargandoModal.set(true);
+      this.cocktailService.obtenerDetalle(bebida.id).subscribe({
+        next: (detalle) => {
+          this.cargandoModal.set(false);
+          if (detalle) {
+            const enriquecida = this.cocktailService.aTarjetaDetalle(detalle);
+            this.productoModal.set({ ...enriquecida, precio: bebida.precio });
+            const texto = (detalle.strInstructions ?? '').replace(/\r/g, ' ').trim();
+            this.descripcionModal.set(texto.length > 220 ? `${texto.slice(0, 220).trim()}…` : texto);
+          }
+        },
+        error: () => this.cargandoModal.set(false),
+      });
+    }
+  }
+
+  cerrarModal(): void {
+    this.saliendoModal.set(true);
+    setTimeout(() => {
+      this.productoModal.set(null);
+      this.saliendoModal.set(false);
+    }, 200);
+  }
+
+  /** Confirma el agregado desde el modal (aquí sí impacta el carrito). */
+  confirmarAgregarModal(): void {
+    const bebida = this.productoModal();
+    if (!bebida) return;
+    this.agregarAlCarrito(bebida);
+    setTimeout(() => this.cerrarModal(), 750);
+  }
+
   agregarAlCarrito(bebida: DrinkCard) {
     this.carritoService.agregar({
       id: bebida.id,
@@ -130,6 +177,17 @@ export class Bebidas implements OnInit {
       precioUnitario: bebida.precio,
     });
     this.agregado.set(bebida.id);
+    this.quemando.set(bebida.id);
     setTimeout(() => this.agregado.set(null), 1200);
+    setTimeout(() => {
+      if (this.quemando() === bebida.id) {
+        this.quemando.set(null);
+      }
+    }, 900);
+  }
+
+  /** La marca quemada en la tarjeta permanece mientras el producto siga en el pedido. */
+  enCarrito(id: string): boolean {
+    return this.carritoService.items().some((item) => item.id === id && item.tipo === 'bebida');
   }
 }

@@ -42,18 +42,29 @@
 
   </div>
 
-  <div class="d-flex flex-wrap gap-2 justify-content-center mb-5">
+  <div class="d-flex flex-wrap justify-content-center gap-3 mb-5">
 
-    <button class="btn btn-category" [class.active]="categoriaActiva() === 'Todas'"
-      (click)="seleccionarCategoria('Todas')">
-      Todas
-    </button>
+    <span class="percha">
+      <span class="cadena-eslabones" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </span>
+      <button type="button" class="tablon-colgante tablon-categoria" [class.activo]="categoriaActiva() === 'Todas'"
+        (click)="seleccionarCategoria('Todas')">
+        <span class="texto-quemado">Todas</span>
+      </button>
+    </span>
 
     @for (categoria of categorias(); track categoria.idCategory) {
-      <button class="btn btn-category" [class.active]="categoriaActiva() === categoria.strCategory"
-        (click)="seleccionarCategoria(categoria.strCategory)">
-        {{ categoria.strCategory }}
-      </button>
+      <span class="percha">
+        <span class="cadena-eslabones" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </span>
+        <button type="button" class="tablon-colgante tablon-categoria"
+          [class.activo]="categoriaActiva() === categoria.strCategory"
+          (click)="seleccionarCategoria(categoria.strCategory)">
+          <span class="texto-quemado">{{ categoria.strCategory }}</span>
+        </button>
+      </span>
     }
 
   </div>
@@ -79,51 +90,60 @@
 
         <div class="col-md-6 col-lg-4">
 
-          <div class="card h-100">
+          <div class="tarjeta-madera con-clavos h-100" role="button" tabindex="0"
+            [attr.aria-label]="'Ver detalle de ' + comida.nombre" (click)="abrirModal(comida)"
+            (keyup.enter)="abrirModal(comida)">
 
-            <img [src]="comida.imagen" class="card-img-top comida-img" [alt]="comida.nombre">
-
-            <div class="card-body d-flex flex-column">
+            <div class="marco-imagen">
+              <img [src]="comida.imagen" class="imagen-comida" [alt]="comida.nombre">
 
               @if (comida.categoria) {
-                <span class="badge-brick mb-2 align-self-start">
+                <span class="etiqueta-colgante etiqueta-fuego">
                   {{ comida.categoria }}
                 </span>
               }
+            </div>
 
-              <h5 class="card-title item-title">
+            <div class="cuerpo-madera d-flex flex-column">
+
+              <h5 class="titulo-tallado">
                 {{ comida.nombre }}
               </h5>
 
               @if (comida.ingredientes.length) {
-                <p class="card-text item-desc">
+                <p class="descripcion-madera">
                   {{ comida.ingredientes.slice(0, 4).join(', ') }}
                   @if (comida.ingredientes.length > 4) { … }
                 </p>
               } @else {
-                <p class="card-text item-desc">
+                <p class="descripcion-madera">
                   Preparado con el estilo de nuestra casa.
                 </p>
               }
 
               <div class="d-flex justify-content-between align-items-center mt-auto pt-2">
 
-                <span class="price-tag">
+                <span class="precio-quemado">
                   ${{ comida.precio | number:'1.0-0' }}
                 </span>
 
-                <button class="btn btn-sm" [class.btn-added]="agregado() === comida.id"
-                  [class.btn-fjord]="agregado() !== comida.id" (click)="agregarAlCarrito(comida)">
-                  @if (agregado() === comida.id) {
-                    <i class="bi bi-check-lg me-1"></i> Agregado
+                <button class="boton-marcar" type="button" [class.marcado]="enCarrito(comida.id)">
+                  @if (enCarrito(comida.id)) {
+                    <i class="bi bi-check-lg me-1"></i> En tu pedido
                   } @else {
-                    <i class="bi bi-cart-plus me-1"></i> Agregar
+                    <i class="bi bi-fire me-1"></i> Agregar
                   }
                 </button>
 
               </div>
 
             </div>
+
+            @if (enCarrito(comida.id)) {
+              <span class="sello-quemado" title="En tu pedido">
+                <i class="bi bi-fire"></i>
+              </span>
+            }
 
           </div>
 
@@ -133,6 +153,19 @@
 
     </div>
 
+  }
+
+  @if (productoModal(); as producto) {
+    <app-producto-modal
+      [producto]="producto"
+      [descripcion]="descripcionModal()"
+      [cargando]="cargandoModal()"
+      [saliendo]="saliendoModal()"
+      [enLlamas]="quemando() === producto.id"
+      [agregadoOk]="agregado() === producto.id"
+      (cerrar)="cerrarModal()"
+      (agregar)="confirmarAgregarModal()"
+    ></app-producto-modal>
   }
 
 </div>

@@ -1,7 +1,7 @@
-<nav class="navbar navbar-expand-lg navbar-dark site-header bg-nordic-dark py-3">
-  <div class="container">
+<header class="cabecera-madera textura-madera">
+  <div class="contenedor-madera container">
 
-    <a class="navbar-brand d-flex align-items-center gap-2" routerLink="/">
+    <a class="marca-madera d-flex align-items-center gap-2" routerLink="/" (click)="cerrarMenu()">
       <img src="img/manila_icon_filipino_v2.png" alt="" class="brand-mark">
       <span class="brand-lockup">
         <span class="brand-viking-word">MANILA</span>
@@ -9,52 +9,54 @@
       </span>
     </a>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu"
-      aria-controls="navbarMenu" aria-expanded="false" aria-label="Abrir navegación">
-      <span class="navbar-toggler-icon"></span>
+    <button
+      class="toggle-madera"
+      type="button"
+      (click)="alternarMenu()"
+      [attr.aria-expanded]="menuAbierto()"
+      aria-label="Abrir navegación"
+    >
+      <span></span><span></span><span></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarMenu">
-      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+    <nav class="viga-carteles" [class.abierto]="menuAbierto()">
 
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-            Inicio
+      @for (cartel of carteles; track cartel.id) {
+        <span class="percha">
+          <span class="cadena-eslabones" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </span>
+
+          <a
+            class="tablon-colgante tablon-nav"
+            [routerLink]="cartel.ruta"
+            routerLinkActive="activo"
+            [routerLinkActiveOptions]="{ exact: !!cartel.exact }"
+            (click)="cerrarMenu()"
+          >
+            <span class="texto-quemado">{{ cartel.label }}</span>
           </a>
-        </li>
+        </span>
+      }
 
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/comidas" routerLinkActive="active">
-            Comidas
-          </a>
-        </li>
+      <span class="percha">
+        <span class="cadena-eslabones" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </span>
 
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/bebidas" routerLinkActive="active">
-            Bebidas
-          </a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/juego" routerLinkActive="active">
-            Memo MANILA
-          </a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link nav-cart-btn" routerLink="/pedido" routerLinkActive="active">
+        <a class="tablon-colgante tablon-nav tablon-pedido" routerLink="/pedido" routerLinkActive="activo" (click)="cerrarMenu()">
+          <span class="texto-quemado">
             <i class="bi bi-cart3 me-1"></i>
             Pedido
-            @if (carritoService.totalItems() > 0) {
-              <span class="cart-counter ms-1">
-                {{ carritoService.totalItems() }}
-              </span>
-            }
-          </a>
-        </li>
+          </span>
 
-      </ul>
-    </div>
+          @if (carritoService.totalItems() > 0) {
+            <span class="contador-brasa ms-1">{{ carritoService.totalItems() }}</span>
+          }
+        </a>
+      </span>
+
+    </nav>
 
   </div>
-</nav>
+</header>

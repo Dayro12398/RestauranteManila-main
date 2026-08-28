@@ -4,10 +4,11 @@ import { DecimalPipe } from '@angular/common';
 import { MealService } from '../core/services/meal.service';
 import { CarritoService } from '../core/services/carrito.service';
 import { MealCard, MealCategory } from '../core/models/meal.model';
+import { ProductoModal } from '../shared/producto-modal/producto-modal';
 
 @Component({
   selector: 'app-comidas',
-  imports: [FormsModule, DecimalPipe],
+  imports: [FormsModule, DecimalPipe, ProductoModal],
   templateUrl: './comidas.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './comidas.css',
@@ -25,6 +26,12 @@ export class Comidas implements OnInit {
   cargando = signal(false);
   error = signal<string | null>(null);
   agregado = signal<string | null>(null);
+  quemando = signal<string | null>(null);
+
+  productoModal = signal<MealCard | null>(null);
+  descripcionModal = signal('');
+  cargandoModal = signal(false);
+  saliendoModal = signal(false);
 
   ngOnInit(): void {
     this.mealService.obtenerCategorias().subscribe({
@@ -101,6 +108,46 @@ export class Comidas implements OnInit {
     });
   }
 
+  /** Abre la ficha del producto. Si viene de un listado por categoría (sin
+   * ingredientes cargados) trae el detalle completo antes de mostrarlo. */
+  abrirModal(comida: MealCard): void {
+    this.productoModal.set(comida);
+    this.saliendoModal.set(false);
+    this.descripcionModal.set('');
+
+    if (comida.ingredientes.length === 0) {
+      this.cargandoModal.set(true);
+      this.mealService.obtenerDetalle(comida.id).subscribe({
+        next: (detalle) => {
+          this.cargandoModal.set(false);
+          if (detalle) {
+            const enriquecida = this.mealService.aTarjetaDetalle(detalle);
+            this.productoModal.set({ ...enriquecida, precio: comida.precio });
+            const texto = (detalle.strInstructions ?? '').replace(/\r/g, ' ').trim();
+            this.descripcionModal.set(texto.length > 220 ? `${texto.slice(0, 220).trim()}…` : texto);
+          }
+        },
+        error: () => this.cargandoModal.set(false),
+      });
+    }
+  }
+
+  cerrarModal(): void {
+    this.saliendoModal.set(true);
+    setTimeout(() => {
+      this.productoModal.set(null);
+      this.saliendoModal.set(false);
+    }, 200);
+  }
+
+  /** Confirma el agregado desde el modal (aquí sí impacta el carrito). */
+  confirmarAgregarModal(): void {
+    const comida = this.productoModal();
+    if (!comida) return;
+    this.agregarAlCarrito(comida);
+    setTimeout(() => this.cerrarModal(), 750);
+  }
+
   agregarAlCarrito(comida: MealCard) {
     this.carritoService.agregar({
       id: comida.id,
@@ -110,6 +157,17 @@ export class Comidas implements OnInit {
       precioUnitario: comida.precio,
     });
     this.agregado.set(comida.id);
+    this.quemando.set(comida.id);
     setTimeout(() => this.agregado.set(null), 1200);
+    setTimeout(() => {
+      if (this.quemando() === comida.id) {
+        this.quemando.set(null);
+      }
+    }, 900);
+  }
+
+  /** La marca quemada en la tarjeta permanece mientras el producto siga en el pedido. */
+  enCarrito(id: string): boolean {
+    return this.carritoService.items().some((item) => item.id === id && item.tipo === 'comida');
   }
 }

@@ -1,0 +1,83 @@
+<div class="fondo-modal" [class.saliendo]="saliendo" (click)="cerrar.emit()">
+  <div class="panel-madera con-clavos" [class.saliendo]="saliendo" (click)="detenerPropagacion($event)">
+
+    <button class="cerrar-modal" type="button" (click)="cerrar.emit()" aria-label="Cerrar">
+      <i class="bi bi-x-lg"></i>
+    </button>
+
+    <div class="modal-imagen">
+      <img [src]="producto.imagen" [alt]="producto.nombre">
+
+      @if (producto.categoria) {
+        <span class="etiqueta-colgante etiqueta-fuego">{{ producto.categoria }}</span>
+      }
+
+      @if (producto.alcoholica !== undefined) {
+        <span class="etiqueta-colgante modal-etiqueta-alcohol" [class.etiqueta-fuego]="producto.alcoholica"
+          [class.etiqueta-humo]="!producto.alcoholica">
+          {{ producto.alcoholica ? 'Alcohólica' : 'Sin alcohol' }}
+        </span>
+      }
+    </div>
+
+    <div class="modal-cuerpo">
+
+      <h3 class="titulo-tallado modal-titulo">{{ producto.nombre }}</h3>
+
+      @if (cargando) {
+        <div class="text-center py-4">
+          <div class="spinner-border text-secondary" style="width: 1.8rem; height: 1.8rem; border-width: 2px;" role="status"></div>
+        </div>
+      } @else {
+
+        @if (descripcion) {
+          <p class="modal-descripcion">{{ descripcion }}</p>
+        }
+
+        @if (producto.ingredientes.length) {
+          <div class="modal-ingredientes">
+            <span class="modal-subtitulo">Ingredientes</span>
+            <ul>
+              @for (ingrediente of producto.ingredientes; track ingrediente) {
+                <li>{{ ingrediente }}</li>
+              }
+            </ul>
+          </div>
+        } @else if (!descripcion) {
+          <p class="modal-descripcion">Preparado con el estilo de nuestra casa.</p>
+        }
+
+      }
+
+      <div class="modal-pie d-flex justify-content-between align-items-center flex-wrap gap-3">
+
+        <span class="precio-quemado modal-precio">
+          ${{ producto.precio | number:'1.0-0' }}
+        </span>
+
+        <button class="boton-marcar boton-marcar-grande" type="button" [class.marcado]="agregadoOk"
+          (click)="agregar.emit()">
+
+          @if (agregadoOk) {
+            <i class="bi bi-check-lg me-1"></i> ¡Agregado al pedido!
+          } @else {
+            <i class="bi bi-fire me-1"></i> Agregar al carrito
+          }
+
+          @if (enLlamas) {
+            <span class="llamas">
+              <span class="llama l1"></span>
+              <span class="llama l2"></span>
+              <span class="llama l3"></span>
+              <span class="llama l4"></span>
+              <span class="humo"></span>
+            </span>
+          }
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>

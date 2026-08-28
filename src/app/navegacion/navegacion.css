@@ -1,12 +1,35 @@
-.site-header {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-  box-shadow: none;
-  z-index: 1030;
+.cabecera-madera {
+  --wood-base: var(--wood-dark);
+  background-color: var(--wood-dark);
+  border-bottom: 4px solid var(--wood-border);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45);
   position: relative;
+  z-index: 1030;
 }
 
-.bg-nordic-dark {
-  background-color: var(--nordic-dark, #14171a);
+/* Viga superior tipo travesaño del que cuelgan los carteles */
+.cabecera-madera::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(180deg, var(--wood-mid), var(--wood-border));
+}
+
+.contenedor-madera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding-top: 0.8rem;
+  padding-bottom: 0.5rem;
+  gap: 0.75rem;
+}
+
+.marca-madera {
+  text-decoration: none;
 }
 
 .brand-mark {
@@ -14,9 +37,10 @@
   width: auto;
   object-fit: contain;
   transition: opacity 0.2s ease;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.5));
 }
 
-.navbar-brand:hover .brand-mark {
+.marca-madera:hover .brand-mark {
   opacity: 0.85;
 }
 
@@ -27,100 +51,100 @@
 }
 
 .brand-lockup .brand-viking-word {
-  color: #f5f3ee;
+  color: var(--parchment);
   font-size: 1.55rem;
 }
 
 .brand-lockup .brand-viking-sub {
-  color: var(--nordic-brick, #a85142);
+  color: var(--ember-2);
   font-size: 0.62rem;
   margin-top: 2px;
 }
 
-.navbar-nav .nav-link {
-  font-family: 'Inter', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: #c5ced7;
-  padding: 0.5rem 0.85rem;
-  position: relative;
-  transition: color 0.2s ease;
-}
-
-.navbar-nav .nav-link:hover {
-  color: #ffffff;
-}
-
-.navbar-nav .nav-link.active {
-  color: #ffffff;
-  font-weight: 600;
-}
-
-.navbar-nav .nav-link.active::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0.85rem;
-  right: 0.85rem;
-  height: 2px;
-  background-color: var(--nordic-brick, #a85142);
-  border-radius: 1px;
-}
-
-/* Botón Pedido con contador de carrito */
-.nav-cart-btn {
-  background-color: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 4px;
-  padding: 0.42rem 0.9rem !important;
-  color: #f5f7f9 !important;
-  transition: all 0.2s ease;
-}
-
-.nav-cart-btn:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.25);
-  color: #ffffff !important;
-}
-
-.nav-cart-btn.active {
-  background-color: var(--nordic-fjord, #2f5468);
-  border-color: var(--nordic-fjord, #2f5468);
-}
-
-.nav-cart-btn.active::after {
+/* --- Botón hamburguesa --- */
+.toggle-madera {
   display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  width: 38px;
+  height: 32px;
+  background-color: var(--wood-mid);
+  border: 2px solid var(--wood-border);
+  border-radius: 4px;
+  padding: 6px 7px;
+}
+.toggle-madera span {
+  display: block;
+  height: 2px;
+  border-radius: 1px;
+  background-color: var(--parchment);
 }
 
-.cart-counter {
+/* --- Viga que sostiene los tablones colgantes --- */
+.viga-carteles {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.1rem;
+  flex-wrap: wrap;
+  padding-top: 6px;
+}
+
+.tablon-nav {
+  padding: 0.5rem 1rem;
+  transform: rotate(-0.4deg);
+}
+.percha:nth-child(even) .tablon-nav {
+  transform: rotate(0.4deg);
+}
+
+.tablon-nav .texto-quemado {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+
+.tablon-pedido {
+  background-color: var(--wood-deep);
+}
+
+.contador-brasa {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--nordic-brick, #a85142);
-  color: #ffffff;
+  background-color: var(--ember-4);
+  color: #fff;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 700;
   min-width: 1.25rem;
   height: 1.25rem;
   padding: 0 0.35rem;
   border-radius: 2px;
+  box-shadow: 0 0 6px rgba(255, 91, 31, 0.6);
 }
 
 @media (max-width: 991.98px) {
-  .navbar-nav .nav-link.active::after {
-    display: none;
-  }
-  
-  .navbar-nav .nav-link {
-    padding: 0.6rem 0;
+  .toggle-madera {
+    display: flex;
   }
 
-  .nav-cart-btn {
-    margin-top: 0.5rem;
-    display: inline-flex;
+  .viga-carteles {
+    flex-basis: 100%;
+    flex-direction: column;
+    align-items: center;
+    max-height: 0;
+    overflow: hidden;
+    gap: 0.75rem;
+    transition: max-height 0.3s ease;
+  }
+
+  .viga-carteles.abierto {
+    max-height: 480px;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
+
+  .tablon-nav {
+    transform: none !important;
   }
 }
-
